@@ -1,9 +1,9 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const nodemailer = require('nodemailer');
-const mongoose = require('mongoose');
 
 dotenv.config();
 
@@ -35,18 +35,25 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Definir esquemas y modelos
-const contactoSchema = new mongoose.Schema({
-  nombre: String,
-  email: String,
-  mensaje: String
+// Definir el esquema para los párrafos
+const ParrafoSchema = new mongoose.Schema({
+  texto: String,  // Ajusta el tipo según el formato de los párrafos en tu base de datos
 });
 
+// Definir el esquema para las categorías
+const CategoriaSchema = new mongoose.Schema({
+  titulo: String,
+  subtitulo: String,
+  adicional: String,
+  parrafo: [ParrafoSchema],  // Array de párrafos
+});
+
+// Definir el esquema principal
 const InformacionSchema = new mongoose.Schema({
-  // Define aquí los campos de tu esquema de información
+  seccion: String,
+  categorias: [CategoriaSchema],  // Array de categorías
 });
 
-const Contacto = mongoose.model('Contacto', contactoSchema);
 const Informacion = mongoose.model('Informacion', InformacionSchema);
 
 // Rutas API
