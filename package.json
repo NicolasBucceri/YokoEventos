@@ -1,0 +1,33 @@
+{
+  "name": "yoko",
+  "private": true,
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "canvg": "^4.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "html2canvas": "^1.4.1",
+    "mongoose": "^8.4.0",
+    "nodemailer": "^6.9.14",
+    "vue": "^3.4.21",
+    "vue-router": "^4.0.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "vite": "^5.2.12"
+  },
+  "description": "This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
