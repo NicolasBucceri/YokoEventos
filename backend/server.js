@@ -35,26 +35,50 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Definir el esquema para los párrafos
-const ParrafoSchema = new mongoose.Schema({
-  texto: String,  // Ajusta el tipo según el formato de los párrafos en tu base de datos
+const informacionSchema = new mongoose.Schema({
+  seccion: {
+    type: String,
+    required: true,
+  },
+  categorias: {
+    type: [String],
+    required: true,
+  },
+  titulo: {
+    type: String,
+    required: true,
+  },
+  subtitulo: {
+    type: String,
+    required: false,
+  },
+  adicional: {
+    type: String,
+    required: false,
+  },
+  parrafo: {
+    type: [String],
+    required: false,
+  },
+  imagen: {
+    type: String,
+    required: false,
+  },
+  usuario: {
+    type: String,
+    required: false,
+  },
+  tiempo: {
+    type: String,
+    required: false,
+  },
+  estrellas: {
+    type: Number,
+    required: false,
+  },
 });
 
-// Definir el esquema para las categorías
-const CategoriaSchema = new mongoose.Schema({
-  titulo: String,
-  subtitulo: String,
-  adicional: String,
-  parrafo: [ParrafoSchema],  // Array de párrafos
-});
-
-// Definir el esquema principal
-const InformacionSchema = new mongoose.Schema({
-  seccion: String,
-  categorias: [CategoriaSchema],  // Array de categorías
-});
-
-const Informacion = mongoose.model('Informacion', InformacionSchema);
+const Informacion = mongoose.model('Informacion', informacionSchema);
 
 // Rutas API
 app.get('/api/info', async (req, res) => {
