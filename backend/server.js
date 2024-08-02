@@ -4,19 +4,16 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
+const serveIndex = require('./serveIndex'); // Importar el middleware
 
-// Cargar variables de entorno desde el archivo .env
 dotenv.config();
 
-// Crear una aplicación Express
 const app = express();
 const port = process.env.PORT || 10000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Conexión a MongoDB con Mongoose
 const uri = process.env.MONGODB_URI;
 
 mongoose
@@ -31,7 +28,6 @@ mongoose
     console.error("Error connecting to MongoDB", err);
   });
 
-// Configurar nodemailer
 const transporter = nodemailer.createTransport({
   service: "hotmail",
   auth: {
@@ -40,53 +36,21 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Definir esquemas y modelos de Mongoose
 const informacionSchema = new mongoose.Schema({
-  seccion: {
-    type: String,
-    required: true,
-  },
-  categorias: {
-    type: [String],
-    required: true,
-  },
-  titulo: {
-    type: String,
-    required: true,
-  },
-  subtitulo: {
-    type: String,
-    required: false,
-  },
-  adicional: {
-    type: String,
-    required: false,
-  },
-  parrafo: {
-    type: [String],
-    required: false,
-  },
-  imagen: {
-    type: String,
-    required: false,
-  },
-  usuario: {
-    type: String,
-    required: false,
-  },
-  tiempo: {
-    type: String,
-    required: false,
-  },
-  estrellas: {
-    type: Number,
-    required: false,
-  },
+  seccion: { type: String, required: true },
+  categorias: { type: [String], required: true },
+  titulo: { type: String, required: true },
+  subtitulo: { type: String, required: false },
+  adicional: { type: String, required: false },
+  parrafo: { type: [String], required: false },
+  imagen: { type: String, required: false },
+  usuario: { type: String, required: false },
+  tiempo: { type: String, required: false },
+  estrellas: { type: Number, required: false },
 });
 
 const Informacion = mongoose.model("Informacion", informacionSchema);
 
-// Rutas API
 app.get("/api/info", async (req, res) => {
   console.log("GET /api/info request received");
   try {
@@ -129,17 +93,10 @@ app.post("/api/contacto", async (req, res) => {
 });
 
 // Servir archivos estáticos desde `dist`
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/static', express.static(path.join(__dirname, 'dist')));
 
-// Manejar cualquier otra ruta con el index.html
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'), (err) => {
-    if (err) {
-      console.error("Error sending file:", err);
-      res.status(500).send("Server Error");
-    }
-  });
-});
+// Usar el middleware para servir index.html
+app.use(serveIndex);
 
 // Manejo de errores
 app.use((err, req, res, next) => {
@@ -147,7 +104,6 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-// Iniciar servidor
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
