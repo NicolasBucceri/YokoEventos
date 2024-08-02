@@ -158,8 +158,10 @@ export default {
   },
   methods: {
     async fetchData() {
+      console.log('Fetching data from:', `${this.apiUrl}/info`);
       try {
         const response = await fetch(`${this.apiUrl}/info`);
+        console.log('Response status:', response.status);
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
@@ -196,6 +198,8 @@ export default {
   }
 };
 </script>
+
+
 
 
 <style scoped>
