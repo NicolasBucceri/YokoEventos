@@ -4,7 +4,6 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
-const serveIndex = require('./serveIndex'); // Importar el middleware
 
 dotenv.config();
 
@@ -93,10 +92,10 @@ app.post("/api/contacto", async (req, res) => {
 });
 
 // Servir archivos estáticos desde `dist`
-app.use('/static', express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '..', 'dist')));
 
 // Usar el middleware para servir index.html
-app.use(serveIndex);
+app.use(require('./serveIndex'));
 
 // Manejo de errores
 app.use((err, req, res, next) => {
