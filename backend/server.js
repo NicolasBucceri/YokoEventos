@@ -4,7 +4,6 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
-const serveIndex = require('./serveIndex'); // Importar el middleware
 
 dotenv.config();
 
@@ -14,13 +13,11 @@ const port = process.env.PORT || 10000;
 app.use(cors());
 app.use(express.json());
 
+// URI de conexión proporcionada por MongoDB Atlas
 const uri = process.env.MONGODB_URI;
 
 mongoose
-  .connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(uri)
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -95,8 +92,10 @@ app.post("/api/contacto", async (req, res) => {
 // Servir archivos estáticos desde `dist`
 app.use('/static', express.static(path.join(__dirname, 'dist')));
 
-// Usar el middleware para servir index.html
-app.use(serveIndex);
+// Servir `index.html` para rutas no definidas
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // Manejo de errores
 app.use((err, req, res, next) => {
