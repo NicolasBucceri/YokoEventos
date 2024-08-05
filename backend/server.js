@@ -13,11 +13,13 @@ const port = process.env.PORT || 10000;
 app.use(cors());
 app.use(express.json());
 
-// URI de conexión proporcionada por MongoDB Atlas
 const uri = process.env.MONGODB_URI;
 
 mongoose
-  .connect(uri)
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -46,7 +48,7 @@ const informacionSchema = new mongoose.Schema({
   estrellas: { type: Number, required: false },
 });
 
-const Informacion = mongoose.model("Informacion", informacionSchema, "informacion");
+const Informacion = mongoose.model("Informacion", informacionSchema);
 
 app.get("/api/info", async (req, res) => {
   console.log("GET /api/info request received");
@@ -90,12 +92,10 @@ app.post("/api/contacto", async (req, res) => {
 });
 
 // Servir archivos estáticos desde `dist`
-app.use('/static', express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
-// Servir `index.html` para rutas no definidas
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// Usar el middleware para servir index.html
+app.use(require('./serveIndex'));
 
 // Manejo de errores
 app.use((err, req, res, next) => {
