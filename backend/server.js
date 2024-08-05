@@ -4,6 +4,7 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
+const serveIndex = require('./serveIndex'); // Importar el middleware
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ const port = process.env.PORT || 10000;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.MONGODB_URI;
+const uri = "mongodb+srv://nicolas:yoko_eventos@cluster0.wu4uf2t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
 
 mongoose
   .connect(uri, {
@@ -48,7 +50,7 @@ const informacionSchema = new mongoose.Schema({
   estrellas: { type: Number, required: false },
 });
 
-const Informacion = mongoose.model("Informacion", informacionSchema);
+const Informacion = mongoose.model("Informacion", informacionSchema, "informacion");
 
 app.get("/api/info", async (req, res) => {
   console.log("GET /api/info request received");
@@ -92,10 +94,10 @@ app.post("/api/contacto", async (req, res) => {
 });
 
 // Servir archivos estáticos desde `dist`
-app.use(express.static(path.join(__dirname, '..', 'dist')));
+app.use('/static', express.static(path.join(__dirname, 'dist')));
 
 // Usar el middleware para servir index.html
-app.use(require('./serveIndex'));
+app.use(serveIndex);
 
 // Manejo de errores
 app.use((err, req, res, next) => {
