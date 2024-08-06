@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const path = require("path");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const nodemailer = require("nodemailer");
+const mongoose = require('mongoose');
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const nodemailer = require('nodemailer');
 
 dotenv.config();
 
@@ -14,17 +14,16 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.MONGODB_URI;
+console.log('MongoDB URI:', process.env.MONGODB_URI);
 
-mongoose
-  .connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log('Connected to MongoDB');
   })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB", err);
+  .catch(err => {
+    console.error('Error connecting to MongoDB:', err.message);
+    console.error('Stack Trace:', err.stack);
   });
 
 const transporter = nodemailer.createTransport({
@@ -48,7 +47,15 @@ const informacionSchema = new mongoose.Schema({
   estrellas: { type: Number, required: false },
 });
 
-const Informacion = mongoose.model("Informacion", informacionSchema);
+const Informacion = mongoose.model("Informacion", informacionSchema, "informacion");
+
+const contactoSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },
+  email: { type: String, required: true },
+  mensaje: { type: String, required: true }
+});
+
+const Contacto = mongoose.model("Contacto", contactoSchema);
 
 app.get("/api/info", async (req, res) => {
   console.log("GET /api/info request received");
@@ -57,17 +64,22 @@ app.get("/api/info", async (req, res) => {
     console.log("Info retrieved:", info);
     res.json(info);
   } catch (err) {
-    console.error("Error retrieving info:", err);
+    console.error("Error retrieving info:", err.message);
+    console.error("Stack Trace:", err.stack);
     res.status(500).json({ message: err.message });
   }
 });
 
 app.post("/api/contacto", async (req, res) => {
+  console.log("POST /api/contacto request received");
   const { nombre, email, mensaje } = req.body;
+  console.log("Received data:", { nombre, email, mensaje });
+  
   const nuevoContacto = new Contacto({ nombre, email, mensaje });
 
   try {
     await nuevoContacto.save();
+    console.log("Contacto saved successfully");
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -78,7 +90,8 @@ app.post("/api/contacto", async (req, res) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error("Error sending email:", error);
+        console.error("Error sending email:", error.message);
+        console.error("Stack Trace:", error.stack);
         res.status(500).json({ message: "Error al enviar el mensaje" });
       } else {
         console.log("Email sent:", info.response);
@@ -86,20 +99,19 @@ app.post("/api/contacto", async (req, res) => {
       }
     });
   } catch (err) {
-    console.error("Error saving contact:", err);
+    console.error("Error saving contact:", err.message);
+    console.error("Stack Trace:", err.stack);
     res.status(500).json({ message: "Error al enviar el mensaje" });
   }
 });
 
-// Servir archivos estáticos desde `dist`
 app.use(express.static(path.join(__dirname, '../dist')));
 
-// Usar el middleware para servir index.html
 app.use(require('./serveIndex'));
 
-// Manejo de errores
 app.use((err, req, res, next) => {
-  console.error("Server error:", err);
+  console.error("Server error:", err.message);
+  console.error("Stack Trace:", err.stack);
   res.status(500).send("Something broke!");
 });
 

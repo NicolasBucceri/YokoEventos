@@ -1,4 +1,3 @@
-// vite.config.js
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
@@ -7,6 +6,7 @@ export default defineConfig({
     outDir: './dist',
   },
   server: {
+    port: 10000,
     proxy: {
       '/api': {
         target: 'https://yokoeventos.onrender.com',
