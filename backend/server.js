@@ -16,7 +16,6 @@ app.use(express.json());
 const uri = process.env.MONGODB_URI;
 console.log('MongoDB URI:', process.env.MONGODB_URI);
 
-
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
@@ -45,22 +44,24 @@ const informacionSchema = new mongoose.Schema({
   usuario: { type: String, required: false },
   tiempo: { type: String, required: false },
   estrellas: { type: Number, required: false },
+  tipo: { type: String, required: true, enum: ['informacion', 'contacto'], default: 'informacion' }
 });
 
-const Informacion = mongoose.model("Informacion", informacionSchema, "informacion");
+const Informacion = mongoose.model("Informacion", informacionSchema, "yoko_eventos");
 
 const contactoSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   email: { type: String, required: true },
-  mensaje: { type: String, required: true }
+  mensaje: { type: String, required: true },
+  tipo: { type: String, required: true, enum: ['informacion', 'contacto'], default: 'contacto' }
 });
 
-const Contacto = mongoose.model("Contacto", contactoSchema);
+const Contacto = mongoose.model("Contactos", contactoSchema, "yoko_eventos");
 
 app.get("/api/info", async (req, res) => {
   console.log("GET /api/info request received");
   try {
-    const info = await Informacion.find();
+    const info = await Informacion.find({ tipo: 'informacion' });
     console.log("Info retrieved:", info);
     res.json(info);
   } catch (err) {
@@ -75,7 +76,7 @@ app.post("/api/contacto", async (req, res) => {
   const { nombre, email, mensaje } = req.body;
   console.log("Received data:", { nombre, email, mensaje });
   
-  const nuevoContacto = new Contacto({ nombre, email, mensaje });
+  const nuevoContacto = new Contacto({ nombre, email, mensaje, tipo: 'contacto' });
 
   try {
     await nuevoContacto.save();

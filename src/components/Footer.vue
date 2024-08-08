@@ -8,8 +8,8 @@
         </ul>
         <ul class="menu">
             <li><a href="#">Inicio</a></li>
-            <li><a href="#">Invitacion</a></li>
-            <li><a href="#">Contacto</a></li>
+            <li><a href="/Invitacion">Invitacion</a></li>
+            <li><a href="/Contacto">Contacto</a></li>
         </ul>
         <p>&copy;2024 Nicolas Bucceri | Todos los derechos reservados</p>
     </footer>

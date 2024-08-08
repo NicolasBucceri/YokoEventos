@@ -46,50 +46,56 @@
 
 <script>
 export default {
-    data() {
-        return {
-            nombre: '',
-            email: '',
-            mensaje: '',
-            error: null,
-            mensajeExito: null,
-        };
+  data() {
+    return {
+      nombre: '',
+      email: '',
+      mensaje: '',
+      error: null,
+      mensajeExito: null,
+      apiUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:10000/api',
+    };
+  },
+  methods: {
+    async enviarFormulario() {
+      try {
+        const response = await fetch(`${this.apiUrl}/contacto`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nombre: this.nombre,
+            email: this.email,
+            mensaje: this.mensaje,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error al enviar el formulario');
+        }
+
+        const data = await response.json();
+        this.mensajeExito = data.message;
+        this.error = null;
+
+        // Limpiar el formulario después de enviarlo
+        this.nombre = '';
+        this.email = '';
+        this.mensaje = '';
+      } catch (err) {
+        this.error = err.message || 'Error al enviar el formulario';
+        this.mensajeExito = null;
+      }
     },
-    methods: {
-        async enviarFormulario() {
-            try {
-                const response = await fetch('http://localhost:5000/api/contacto', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        nombre: this.nombre,
-                        email: this.email,
-                        mensaje: this.mensaje,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error al enviar el formulario');
-                }
-
-                const data = await response.json();
-                this.mensajeExito = data.message;
-                this.error = null;
-
-                // Limpiar el formulario después de enviarlo
-                this.nombre = '';
-                this.email = '';
-                this.mensaje = '';
-            } catch (err) {
-                this.error = err.message || 'Error al enviar el formulario';
-                this.mensajeExito = null;
-            }
-        },
-    },
+  },
 };
 </script>
+
+
+
+
 
 <style scoped>
 .encabezado {
@@ -113,6 +119,7 @@ export default {
     padding: 1rem;
     border-radius: 8px;
 }
+
 .masInformacion {
     display: flex;
     justify-content: center;
@@ -224,18 +231,30 @@ export default {
 }
 
 @media (max-width: 1024px) {
+    .encabezado {
+        margin-top: 7%;
+    }
+
     .header {
         margin-top: 6%;
     }
 }
 
 @media (max-width: 768px) {
+    .encabezado {
+        margin-top: 9%;
+    }
+
     .header {
         margin-top: 10%
     }
 }
 
-@media (max-width: 426px) {
+@media (max-width: 550px) {
+    .encabezado {
+        margin-top: 14%;
+    }
+
     .header {
         margin-top: 15%
     }
@@ -251,10 +270,18 @@ export default {
         margin: 0 auto;
         margin-bottom: 5%;
     }
-}
-@media (max-width: 320px) {
-    .header {
-        margin-top: 20%
+
+    #mapa iframe {
+        width: 100%;
+        height: 500px;
+        border: 0;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 376px) {
+        .encabezado {
+            margin-top: 19%;
+        }
     }
 }
 </style>

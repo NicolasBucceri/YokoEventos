@@ -93,7 +93,7 @@
         <div v-for="item in getParrafos('tarjetasDeInvitacion')" :key="item">
           <p>{{ item }}</p>
         </div>
-        <a href="" class="btn-1">Crea Tu Tarjeta</a>
+        <a href="/Invitacion" class="btn-1">Crea Tu Tarjeta</a>
       </div>
     </div>
   </section>
@@ -152,9 +152,19 @@ export default {
     console.log('Component created');
     await this.fetchData();
   },
-  async mounted() {
-    console.log('Component mounted');
-    await this.fetchData();
+  methods: {
+    async fetchData() {
+      try {
+        const response = await fetch(`${this.apiUrl}/info`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        this.info = data;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
   },
   methods: {
     async fetchData() {
@@ -199,9 +209,6 @@ export default {
 };
 </script>
 
-
-
-
 <style scoped>
 :root {
   --colorPrincipal: #363636;
@@ -210,6 +217,7 @@ export default {
 }
 .banner {
   position: relative;
+  background: #fff;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -794,80 +802,39 @@ section#tarjetaDeInvitacion {
     max-width: 350px;
   }
 }
-@media (max-width: 426px) {
-  /* Sección Inicio */
+@media (max-width: 550px) {
+
   .contenedorInicio h1 {
-    font-size: 1.4em;
-    width: 100%;
-    margin: 10px 10px 10px 50px;
+    width: 170%;
+    margin-left: 30px;
+    margin-bottom: 30px;
   }
-
   .contenedorInicio p {
-    font-size: 14px;
-    width: 100%;
-    line-height: 1.5;
+    width: 170%;
+    margin-left: 30px;
+    margin-bottom: 1%;
   }
-
   .botonesInicio {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    gap: 20px;
-    margin-left: 40%;
-    margin-bottom: 80%;
+    width: 100%;
+    margin-bottom: 100%;
+    margin-left: 50%;
   }
-
   .contenedorImgInicio img {
     display: none;
   }
 }
-@media (max-width: 376px) {
-  /* Sección Inicio */
-  section#inicio {
-    min-height: 110vh;
-  }
+@media (max-width: 370px) {
 
-  .contenedorGeneralInicio {
-    padding: 20px;
-    text-align: center;
-  }
-
-  .contenedorInicio h1 {
-    font-size: 1.5em;
-    margin: 10px 10px 10px 90px;
-  }
-
-  .contenedorInicio p {
-    font-size: 0.9em;
-    width: 150%;
-    line-height: 1.5;
-  }
-
-  .botonesInicio {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 170%;
-    margin-left: 100%;
-  }
+.contenedorInicio p {
+  width: 170%;
+  font-size: 14px;
+  margin-left: 30px;
+  margin-bottom: 1%;
 }
-@media (max-width: 321px) {
-  /* Sección Inicio */
-  section#inicio {
-    min-height: 130vh;
-  }
-
-  .contenedorInicio h1 {
-    width: 190%;
-    font-size: 1.8em;
-    margin: 10px 10px 10px 10px;
-  }
-
-  .contenedorInicio p {
-    font-size: 1em;
-    width: 170%;
-    line-height: 1.5;
-    margin: 10px 10px 10px 25px;
-  }
-
 }
+
+
 </style>
