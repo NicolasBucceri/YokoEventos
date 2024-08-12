@@ -1,8 +1,7 @@
-// src/routes/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import Contacto from '../views/Contacto.vue'
-import Invitacion from '../views/Invitacion.vue'
+import Contacto from '../views/Contacto.vue';
+import Invitacion from '../views/Invitacion.vue';
 
 const routes = [
     {
@@ -11,12 +10,12 @@ const routes = [
         component: Home,
     },
     {
-        path: '/Contacto',
+        path: '/contacto', // Usa minúsculas en las rutas
         name: 'Contacto',
         component: Contacto,
     },
     {
-        path: '/Invitacion',
+        path: '/invitacion', // Usa minúsculas en las rutas
         name: 'Invitacion',
         component: Invitacion,
     },
