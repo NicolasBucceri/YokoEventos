@@ -7,6 +7,11 @@ const nodemailer = require('nodemailer');
 
 dotenv.config();
 
+console.log('MongoDB URI:', process.env.MONGODB_URI);
+console.log('Email User:', process.env.EMAIL_USER);
+console.log('Email Pass:', process.env.EMAIL_PASS);
+
+
 const app = express();
 const port = process.env.PORT || 3000;
 

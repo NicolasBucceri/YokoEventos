@@ -1,27 +1,24 @@
 const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 const transporter = nodemailer.createTransport({
   service: 'hotmail',
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+    user: 'yokoeventosprueba@hotmail.com',
+    pass: 'jrjzupswmxrcdmhx'
+  }
 });
 
 const mailOptions = {
-  from: process.env.EMAIL_USER,
+  from: 'yokoeventosprueba@hotmail.com',
   to: 'yokoeventosprueba@hotmail.com',
-  subject: 'Prueba de envío de correo electrónico',
-  text: 'Este es un mensaje de prueba.',
+  subject: 'Test Email',
+  text: 'This is a test email'
 };
 
 transporter.sendMail(mailOptions, (error, info) => {
   if (error) {
-    console.error('Error al enviar el correo:', error);
+    console.error('Error sending test email:', error);
   } else {
-    console.log('Correo enviado:', info.response);
+    console.log('Test email sent:', info.response);
   }
 });
