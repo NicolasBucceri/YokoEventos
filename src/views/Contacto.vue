@@ -43,10 +43,10 @@
         </div>
     </main>
 </template>
-
 <script>
 export default {
   data() {
+    console.log('API Base URL:', import.meta.env.VITE_API_BASE_URL); // Verifica si la variable está cargada
     return {
       nombre: '',
       email: '',
@@ -58,8 +58,13 @@ export default {
   },
   methods: {
     async enviarFormulario() {
+      this.error = null;
+      this.mensajeExito = null;
+
+      console.log(`Enviando solicitud a: ${this.apiUrl}/contacto/`); // Verifica la URL
+
       try {
-        const response = await fetch(`${this.apiUrl}/contacto`, {
+        const response = await fetch(`${this.apiUrl}/contacto/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -72,8 +77,8 @@ export default {
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Error al enviar el formulario');
+          const errorText = await response.text(); // Maneja respuestas no JSON
+          throw new Error(errorText || 'Error al enviar el formulario');
         }
 
         const data = await response.json();
@@ -85,6 +90,7 @@ export default {
         this.email = '';
         this.mensaje = '';
       } catch (err) {
+        console.error('Error en la solicitud fetch:', err); // Imprime el error completo
         this.error = err.message || 'Error al enviar el formulario';
         this.mensajeExito = null;
       }
@@ -92,6 +98,10 @@ export default {
   },
 };
 </script>
+
+
+
+
 
 
 
