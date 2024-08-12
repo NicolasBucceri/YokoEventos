@@ -196,11 +196,11 @@ export default {
       hora: '',
       horaFin: '',
       colores: {
-        /* Fondo */
+        /*Fondo*/
         encabezado: '#363636',
         circulos: '#363636',
         estrellas: '#363636',
-        /* Textos */
+        /*Textos*/
         nombre: '#FFFFFF',
         tituloDeInvitacion: '#FFFFFF',
         edad: '#363636',
@@ -210,11 +210,11 @@ export default {
         ubicacion: '#363636',
       },
       coloresPredeterminados: {
-        /* Fondo */
+        /*Fondo*/
         encabezado: '#363636',
         circulos: '#363636',
         estrellas: '#363636',
-        /* Textos */
+        /*Textos*/
         nombre: '#FFFFFF',
         tituloDeInvitacion: '#FFFFFF',
         edad: '#363636',
@@ -266,19 +266,9 @@ export default {
     },
     async downloadColumnaTarjeta() {
       const element = this.$refs.columnaTarjeta;
-
-      // Asegúrate de que el elemento esté visible antes de capturarlo
-      element.style.visibility = 'visible';
-
       const canvas = await html2canvas(element, {
         useCORS: true,
-        scrollX: 0,
-        scrollY: 0,
       });
-
-      // Oculta el elemento después de capturarlo
-      element.style.visibility = 'hidden';
-
       const image = canvas.toDataURL('image/jpeg', 1.0);
 
       const link = document.createElement('a');
@@ -305,7 +295,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/cooper-black');
