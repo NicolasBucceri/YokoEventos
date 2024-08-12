@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
   build: {
-    outDir: './dist',
+    outDir: 'dist', // Asegúrate de que esté configurado como 'dist'
   },
   server: {
     port: 10000,
