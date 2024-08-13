@@ -264,18 +264,15 @@ export default {
       }
       return `${formattedHours}:${minutes}`;
     },
-    async downloadColumnaTarjeta() {
-      const element = this.$refs.columnaTarjeta;
-      const canvas = await html2canvas(element, {
-        useCORS: true,
-      });
-      const image = canvas.toDataURL('image/jpeg', 1.0);
-
+    downloadColumnaTarjeta() {
+    const element = this.$refs.columnaTarjeta;
+    html2canvas(element).then((canvas) => {
       const link = document.createElement('a');
-      link.href = image;
-      link.download = 'tarjeta_de_invitacion.jpg';
+      link.download = 'invitacion.png';
+      link.href = canvas.toDataURL();
       link.click();
-    },
+    });
+  },
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
@@ -297,12 +294,7 @@ export default {
 </script>
 
 <style scoped>
-
-@font-face {
-  font-family: 'CopperplateGothicBold';
-  src: url('data:font/ttf;base64,AAEAAAARAQAABAA...') format('truetype');
-}
-
+@import url('https://fonts.cdnfonts.com/css/cooper-black');
 
 .invitacion-container {
   text-align: center;
