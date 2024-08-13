@@ -294,12 +294,12 @@ export default {
 </script>
 
 <style scoped>
+  @import url('https://fonts.cdnfonts.com/css/cooper-black');
 body {
   font-family: 'Cooper Black', sans-serif;
 }
 
 
- @import url('https://fonts.cdnfonts.com/css/cooper-black');
 
 .invitacion-container {
   text-align: center;
