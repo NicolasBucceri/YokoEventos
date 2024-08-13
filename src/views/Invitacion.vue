@@ -103,7 +103,7 @@
                     :fill="colores.texto">Eventos</text>
 
                 </g>
-                
+
                 <text class="cls-25 ubicacion" x="-4%" y="5%" transform="translate(5.12 15.53)"
                   :fill="colores.ubicacion">Miranda 4655</text>
               </g>
@@ -196,6 +196,8 @@
 
 <script>
 import html2canvas from 'html2canvas';
+import FontFaceObserver from 'fontfaceobserver';
+
 
 export default {
   data() {
