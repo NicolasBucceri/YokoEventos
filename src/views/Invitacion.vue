@@ -265,14 +265,17 @@ export default {
       return `${formattedHours}:${minutes}`;
     },
     downloadColumnaTarjeta() {
-    const element = this.$refs.columnaTarjeta;
-    html2canvas(element).then((canvas) => {
-      const link = document.createElement('a');
-      link.download = 'invitacion.png';
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  },
+      const element = this.$refs.columnaTarjeta;
+      html2canvas(element, { 
+        useCORS: true, // Para permitir el uso de fuentes personalizadas y otros recursos externos
+        allowTaint: true 
+      }).then((canvas) => {
+        const link = document.createElement('a');
+        link.download = 'invitacion.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    },
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
@@ -292,6 +295,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/cooper-black');
