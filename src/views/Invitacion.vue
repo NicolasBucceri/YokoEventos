@@ -294,10 +294,10 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: 'Cooper Black';
-  src: url('https://fonts.cdnfonts.com/css/cooper-black') format('woff2');
+body {
+  font-family: 'Cooper Black', sans-serif;
 }
+
 
 /* @import url('https://fonts.cdnfonts.com/css/cooper-black'); */
 
