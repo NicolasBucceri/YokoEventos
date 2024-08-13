@@ -289,6 +289,17 @@ export default {
   },
   mounted() {
     this.cargarColoresDeLocalStorage();
+    
+    // Verificar si la tipografía se carga correctamente
+    const fontName = "CopperplateGothicBold";
+    const font = new FontFaceObserver(fontName);
+
+    font.load().then(() => {
+      console.log(`La tipografía "${fontName}" se ha cargado correctamente.`);
+    }).catch(() => {
+      console.error(`Error al cargar la tipografía "${fontName}".`);
+    });
+    
   }
 };
 </script>
