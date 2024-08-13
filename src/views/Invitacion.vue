@@ -71,29 +71,39 @@
               </g>
               <g id="Textos">
                 <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre"
-                  font-family="'CopperplateGothicBold', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
+                  font-family="'Cooper Black', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
+
                 <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle"
                   :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
+
                 <text class="cls-10 edad" x="-1%" y="1%" transform="translate(3.34 7.78)" :fill="colores.edad">
                   <tspan class="cls-11">{{ edad || '20' }}</tspan>
                   <tspan :dx="edadDx" x="13%" style="font-size: 1.7px;"> Años</tspan>
                 </text>
+
                 <text class="cls-12 fecha" x="-3%" y="2%" transform="translate(4.16 8.75)" :fill="colores.fecha"
                   style="font-size: 10px;">
                   <tspan class="cls-13">{{ formatFecha(fecha) || '18/12/2024' }}</tspan>
                 </text>
+
                 <text class="cls-14 hora" x="-5%" y="3%" transform="translate(4.26 10.6)" :fill="colores.hora"
                   style="font-size: 10px;">
                   <tspan class="cls-15">{{ formatHora(hora, '17:00') }} | {{ formatHora(horaFin, '20:00') }}</tspan>
                 </text>
+
                 <text class="cls-21 tituloDeEspera" x="-3%" y="4%" transform="translate(3.38 12.35)"
                   :fill="colores.tituloDeEspera" style="font-size: 1px;">Te Esperamos</text>
+
                 <g id="Yoko_Eventos" data-name="Yoko Eventos">
+
                   <text class="cls-16 yoko" x="2%" y="4%" transform="translate(4.75 14.22)"
                     :fill="colores.texto">YOKO</text>
+
                   <text class="cls-19 eventos" x="-17%" y="4%" transform="translate(7.78 14.74)"
                     :fill="colores.texto">Eventos</text>
+
                 </g>
+                
                 <text class="cls-25 ubicacion" x="-4%" y="5%" transform="translate(5.12 15.53)"
                   :fill="colores.ubicacion">Miranda 4655</text>
               </g>
@@ -289,9 +299,9 @@ export default {
   },
   mounted() {
     this.cargarColoresDeLocalStorage();
-    
+
     // Verificar si la tipografía se carga correctamente
-    const fontName = "CopperplateGothicBold";
+    const fontName = "Cooper Black";
     const font = new FontFaceObserver(fontName);
 
     font.load().then(() => {
@@ -306,11 +316,6 @@ export default {
 
 <style scoped>
   @import url('https://fonts.cdnfonts.com/css/cooper-black');
-body {
-  font-family: 'Cooper Black', sans-serif;
-}
-
-
 
 .invitacion-container {
   text-align: center;
