@@ -299,7 +299,7 @@ body {
 }
 
 
-/* @import url('https://fonts.cdnfonts.com/css/cooper-black'); */
+ @import url('https://fonts.cdnfonts.com/css/cooper-black');
 
 .invitacion-container {
   text-align: center;
