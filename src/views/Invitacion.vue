@@ -196,8 +196,6 @@
 
 <script>
 import html2canvas from 'html2canvas';
-import FontFaceObserver from 'fontfaceobserver';
-
 
 export default {
   data() {
@@ -277,18 +275,40 @@ export default {
       return `${formattedHours}:${minutes}`;
     },
     downloadColumnaTarjeta() {
-    const element = this.$refs.columnaTarjeta;
-    html2canvas(element).then((canvas) => {
-      const link = document.createElement('a');
-      link.download = 'invitacion.png';
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  },
+      const element = this.$refs.columnaTarjeta;
+      html2canvas(element).then((canvas) => {
+        const link = document.createElement('a');
+        link.download = 'invitacion.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    },
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
       return `${day}/${month}/${year}`;
+    },
+    verificarTipografia() {
+      const svg = this.$refs.columnaTarjeta.querySelector('svg');
+      if (svg) {
+        const texts = svg.querySelectorAll('text');
+        let fontApplied = true;
+
+        texts.forEach((text) => {
+          const computedStyle = window.getComputedStyle(text);
+          if (computedStyle.fontFamily.indexOf(this.fontName) === -1) {
+            fontApplied = false;
+          }
+        });
+
+        if (fontApplied) {
+          console.log(`La tipografía "${this.fontName}" se está aplicando correctamente.`);
+        } else {
+          console.error(`La tipografía "${this.fontName}" no se está aplicando correctamente.`);
+        }
+      } else {
+        console.error('No se encontró el elemento SVG.');
+      }
     },
   },
   watch: {
@@ -301,23 +321,13 @@ export default {
   },
   mounted() {
     this.cargarColoresDeLocalStorage();
-
-    // Verificar si la tipografía se carga correctamente
-    const fontName = "Cooper Black";
-    const font = new FontFaceObserver(fontName);
-
-    font.load().then(() => {
-      console.log(`La tipografía "${fontName}" se ha cargado correctamente.`);
-    }).catch(() => {
-      console.error(`Error al cargar la tipografía "${fontName}".`);
-    });
-    
+    this.verificarTipografia();
   }
 };
 </script>
 
 <style scoped>
-  @import url('https://fonts.cdnfonts.com/css/cooper-black');
+@import url('https://fonts.cdnfonts.com/css/cooper-black');
 
 .invitacion-container {
   text-align: center;
