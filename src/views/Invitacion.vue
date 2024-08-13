@@ -186,7 +186,6 @@
 
 <script>
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 export default {
   data() {
@@ -265,21 +264,15 @@ export default {
       }
       return `${formattedHours}:${minutes}`;
     },
-    downloadInvitation() {
-      const invitationElement = this.$refs.invitationRef;
-      
-      html2canvas(invitationElement).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-          orientation: 'portrait',
-          unit: 'px',
-          format: [canvas.width, canvas.height],
-        });
-
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-        pdf.save('invitacion.pdf');
-      });
-    },
+    downloadColumnaTarjeta() {
+    const element = this.$refs.columnaTarjeta;
+    html2canvas(element).then((canvas) => {
+      const link = document.createElement('a');
+      link.download = 'invitacion.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  },
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
@@ -301,7 +294,12 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.cdnfonts.com/css/cooper-black');
+@font-face {
+  font-family: 'Cooper Black';
+  src: url('https://fonts.cdnfonts.com/css/cooper-black') format('woff2');
+}
+
+/* @import url('https://fonts.cdnfonts.com/css/cooper-black'); */
 
 .invitacion-container {
   text-align: center;
