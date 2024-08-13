@@ -297,7 +297,12 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.cdnfonts.com/css/cooper-black');
+
+@font-face {
+  font-family: 'CopperplateGothicBold';
+  src: url('data:font/ttf;base64,AAEAAAARAQAABAA...') format('truetype');
+}
+
 
 .invitacion-container {
   text-align: center;
