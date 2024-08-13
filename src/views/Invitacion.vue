@@ -42,6 +42,16 @@
           <div class="fondoSVG-container">
             <svg width="130mm" height="180mm" id="miSVG" viewBox="0 0 13.03 17.99" class="fondoSVG">
               <svg viewBox="0 890 2000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <style type="text/css">
+                    @import url('https://fonts.cdnfonts.com/css/cooper-black');
+
+                    .texto {
+                      font-family: 'Cooper Black', sans-serif;
+                    }
+                    <text x="10" y="40" class="texto">Texto de Ejemplo</text>
+                  </style>
+                </defs>
                 <path
                   d="M0 1087V0H2066V389.556C1992.87 465.993 1963.41 574.858 1857.24 631.474C1621.8 757.026 1432.75 474.398 1078.98 760.241C725.216 1046.08 675.659 970.759 474.042 929.925C312.749 897.257 90.8085 1021.03 0 1087Z"
                   :fill="colores.encabezado" />
