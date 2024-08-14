@@ -497,7 +497,7 @@ svg {
 
 /*TARJETA*/
 .tituloInicial {
-  font-family: 'Cooper Black', sans-serif;
+  font-family: 'Cooper Black', sans-serif !important;
   font-size: 0.8px;
   font-style: normal;
 }
@@ -518,12 +518,12 @@ svg {
 }
 
 .hora {
-  font-family: Cooper Black, sans-serif;
+  font-family: 'Cooper Black', sans-serif;
   font-size: 0.9px !important;
 }
 
 .tituloDeEspera {
-  font-family: Cooper Black, sans-serif;
+  font-family: 'Cooper Black', sans-serif;
   font-size: 1px !important;
 }
 
