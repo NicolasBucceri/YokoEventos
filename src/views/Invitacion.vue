@@ -70,21 +70,24 @@
                 </g>
               </g>
               <g id="Textos">
-                <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
+                <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre"
+                  font-family="'Cooper Black', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
 
-                <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle" :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
+                <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle"
+                  :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
 
                 <text class="cls-10 edad" x="-1%" y="1%" transform="translate(3.34 7.78)" :fill="colores.edad">
                   <tspan class="cls-11">{{ edad || '20' }}</tspan>
                   <tspan :dx="edadDx" x="13%" style="font-size: 1.7px;"> Años</tspan>
                 </text>
 
-                <text class="cls-12 fecha" x="-3%" y="2%" transform="translate(4.16 8.75)" :fill="colores.fecha">
+                <text class="cls-12 fecha" x="-3%" y="2%" transform="translate(4.16 8.75)" :fill="colores.fecha"
+                  style="font-size: 10px;">
                   <tspan class="cls-13">{{ formatFecha(fecha) || '18/12/2024' }}</tspan>
                 </text>
 
                 <text class="cls-14 hora" x="-5%" y="3%" transform="translate(4.26 10.6)" :fill="colores.hora"
->
+                  style="font-size: 10px;">
                   <tspan class="cls-15">{{ formatHora(hora, '17:00') }} | {{ formatHora(horaFin, '20:00') }}</tspan>
                 </text>
 
@@ -192,7 +195,6 @@
 
 
 <script>
-import WebFont from 'webfontloader';
 import html2canvas from 'html2canvas';
 
 export default {
@@ -307,13 +309,6 @@ export default {
       } else {
         console.error('No se encontró el elemento SVG.');
       }
-    },
-    cargarFuentes() {
-      WebFont.load({
-        google: {
-          families: ['Roboto:400,700', 'Cooper Black'] // Reemplaza con las fuentes que necesitas
-        }
-      });
     },
   },
   watch: {
