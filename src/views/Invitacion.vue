@@ -42,15 +42,6 @@
           <div class="fondoSVG-container">
             <svg width="130mm" height="180mm" id="miSVG" viewBox="0 0 13.03 17.99" class="fondoSVG">
               <svg viewBox="0 890 2000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <style>
-                  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-                  text {
-                    font-family: 'Roboto', sans-serif;
-                    font-size: 24px;
-                  }
-                </style>
-                <text x="10" y="50">Texto con Roboto</text>
                 <path
                   d="M0 1087V0H2066V389.556C1992.87 465.993 1963.41 574.858 1857.24 631.474C1621.8 757.026 1432.75 474.398 1078.98 760.241C725.216 1046.08 675.659 970.759 474.042 929.925C312.749 897.257 90.8085 1021.03 0 1087Z"
                   :fill="colores.encabezado" />
@@ -79,24 +70,21 @@
                 </g>
               </g>
               <g id="Textos">
-                <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre"
-                  font-family="'Roboto', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
+                <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
 
-                <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle"
-                  :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
+                <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle" :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
 
                 <text class="cls-10 edad" x="-1%" y="1%" transform="translate(3.34 7.78)" :fill="colores.edad">
                   <tspan class="cls-11">{{ edad || '20' }}</tspan>
                   <tspan :dx="edadDx" x="13%" style="font-size: 1.7px;"> Años</tspan>
                 </text>
 
-                <text class="cls-12 fecha" x="-3%" y="2%" transform="translate(4.16 8.75)" :fill="colores.fecha"
-                  style="font-size: 10px;">
+                <text class="cls-12 fecha" x="-3%" y="2%" transform="translate(4.16 8.75)" :fill="colores.fecha">
                   <tspan class="cls-13">{{ formatFecha(fecha) || '18/12/2024' }}</tspan>
                 </text>
 
                 <text class="cls-14 hora" x="-5%" y="3%" transform="translate(4.26 10.6)" :fill="colores.hora"
-                  style="font-size: 10px;">
+>
                   <tspan class="cls-15">{{ formatHora(hora, '17:00') }} | {{ formatHora(horaFin, '20:00') }}</tspan>
                 </text>
 
@@ -204,6 +192,7 @@
 
 
 <script>
+import WebFont from 'webfontloader';
 import html2canvas from 'html2canvas';
 
 export default {
@@ -319,6 +308,13 @@ export default {
         console.error('No se encontró el elemento SVG.');
       }
     },
+    cargarFuentes() {
+      WebFont.load({
+        google: {
+          families: ['Roboto:400,700', 'Cooper Black'] // Reemplaza con las fuentes que necesitas
+        }
+      });
+    },
   },
   watch: {
     colores: {
@@ -336,11 +332,7 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-  font-family: 'Roboto', sans-serif;
-}
+@import url('https://fonts.cdnfonts.com/css/cooper-black');
 
 .invitacion-container {
   text-align: center;
@@ -501,12 +493,12 @@ svg {
 
 /*TARJETA*/
 .tituloInicial {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Cooper Black', sans-serif;
   font-size: 0.8px;
 }
 
 .nombre {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Cooper Black', sans-serif;
   font-size: 2px !important;
 }
 
