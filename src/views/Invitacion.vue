@@ -488,8 +488,9 @@ svg {
 
 /*TARJETA*/
 .tituloInicial {
-  font-family: Cooper Black, sans-serif;
+  font-family: 'Cooper Black', sans-serif;
   font-size: 0.8px;
+  font-style: normal;
 }
 
 .nombre {
