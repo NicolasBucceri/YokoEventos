@@ -329,6 +329,15 @@ export default {
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/cooper-black');
 
+@font-face {
+  font-family: 'Cooper Black';
+  src: url('/COOPBL.TTF') format('truetype'); /* Usa 'truetype' para archivos .ttf */
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 .invitacion-container {
   text-align: center;
   margin: 20px;
