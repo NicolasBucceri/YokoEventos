@@ -369,12 +369,6 @@ export default {
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/cooper-black');
 
-@font-face {
-  font-family: 'Cooper Black';
-  src: url('data:font/woff2;base64,aHR0cHM6Ly9mb250cy5jZG5mb250cy5jb20vY3NzL2Nvb3Blci1ibGFjayIgcmVsPSJzdHlsZXNoZWV0') format('woff2');
-}
-
-
 
 .invitacion-container {
   text-align: center;
