@@ -206,6 +206,7 @@ export default {
       fecha: '',
       hora: '',
       horaFin: '',
+      isMobile: window.innerWidth <= 768,
       colores: {
         /*Fondo*/
         encabezado: '#363636',
@@ -276,32 +277,38 @@ export default {
       }
       return `${formattedHours}:${minutes}`;
     },
-    downloadColumnaTarjetaPC() {
-      const element = this.$refs.columnaTarjeta;
-      html2canvas(element, {
-        width: element.offsetWidth,
-        height: element.offsetHeight,
-        scale: 2, // Adjust the scale for PC
-      }).then((canvas) => {
-        const link = document.createElement('a');
-        link.download = 'invitacion-pc.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    },
-    downloadColumnaTarjetaMobile() {
-      const element = this.$refs.columnaTarjeta;
-      html2canvas(element, {
-        width: element.offsetWidth,
-        height: element.offsetHeight,
-        scale: 1, // Adjust the scale for mobile
-      }).then((canvas) => {
-        const link = document.createElement('a');
-        link.download = 'invitacion-mobile.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    },
+    checkIsMobile() {
+    this.isMobile = window.innerWidth <= 768;
+  },
+  loadFontAndCapture(element, callback) {
+    const font = new FontFace('Cooper Black', 'url(https://fonts.gstatic.com/s/cooperblack/v1/dg4cPr0cJd2SAVbKFXqOe6q5-gjG6S_P.ttf)');
+    font.load().then(() => {
+      document.fonts.add(font);
+      callback(element);
+    });
+  },
+    captureInvitationPC() {
+    const element = this.$refs.columnaTarjeta;
+    html2canvas(element, { scale: 2 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'invitacion.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  },
+
+  captureInvitationMobile() {
+    const element = this.$refs.columnaTarjeta;
+    html2canvas(element, { scale: 2 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'invitacion.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  },
+  beforeDestroy() {
+  window.removeEventListener('resize', this.checkIsMobile);
+},
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
@@ -348,6 +355,7 @@ export default {
   mounted() {
     this.cargarColoresDeLocalStorage();
     this.verificarTipografia();
+    window.addEventListener('resize', this.checkIsMobile);
 
     // Recalculate isMobile on resize
     window.addEventListener('resize', () => {
