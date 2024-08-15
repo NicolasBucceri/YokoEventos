@@ -1,11 +1,14 @@
 <template>
-    <div v-if="loading" class="d-flex flex-column justify-content-center align-items-center">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <p>Cargando base de datos...</p>
+
+    <!-- Spinner de carga -->
+    <div v-if="loading" class="spinner-container">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
-  <section id="banner">
+    <p>Cargando base de datos...</p>
+  </div>
+
+  <section id="banner" v-if="!loading">
     <div class="banner">
       <img src="../../public/img/yoko.webp" alt="">
       <button class="scroll-button" @click="scrollToContent">
@@ -14,7 +17,7 @@
     </div>
   </section>
 
-  <section id="inicio" v-if="info.length">
+  <section id="inicio" v-if="info.length && !loading">
     <div class="contenedorGeneralInicio">
       <div class="contenedorInicio">
         <h1>{{ getTitulo('home') }}</h1>
@@ -33,7 +36,7 @@
     </div>
   </section>
 
-  <section id="salon" v-if="info.length">
+  <section id="salon" v-if="info.length && !loading">
     <div class="contenedorSalonModerno">
       <div class="contenedorCarrusel">
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -76,7 +79,7 @@
     </div>
   </section>
 
-  <section id="eventos" v-if="info.length">
+  <section id="eventos" v-if="info.length && !loading">
     <h3 class="tituloEventos">Eventos</h3>
     <div class="contenedorEventos">
       <div v-for="evento in getEventos()" :key="evento._id" class="tarjetaEvento">
@@ -89,7 +92,7 @@
     </div>
   </section>
 
-  <section id="tarjetaDeInvitacion" v-if="info.length">
+  <section id="tarjetaDeInvitacion" v-if="info.length && !loading">
     <div class="contenedorTarjetaDeInvitacion container">
       <div class="tarjetaDeInvitacionImg">
         <img class="imgTarjetaDeInvitacion" src="../../public/img/invitacion.webp" alt="">
@@ -104,7 +107,7 @@
     </div>
   </section>
 
-  <section id="reseñas" v-if="info.length">
+  <section id="reseñas" v-if="info.length && !loading">
     <div class="medioTexto">
       <h4>Reseñas</h4>
       <h5>Opiniones de los clientes</h5>
@@ -151,13 +154,13 @@ export default {
   data() {
     return {
       info: [],
-      loading: true,  // Agregado para controlar la visibilidad del spinner
+      loading: true,  // Para controlar la visibilidad del spinner
       apiUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
     };
   },
   async created() {
-    console.log('Component created');
     await this.fetchData();
+    this.loading = false; // Desactiva el spinner después de cargar los datos
   },
   methods: {
     async fetchData() {
@@ -171,36 +174,16 @@ export default {
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    }
-  },
-  methods: {
-    async fetchData() {
-      console.log('Fetching data from:', `${this.apiUrl}/info`);
-      try {
-        const response = await fetch(`${this.apiUrl}/info`);
-        console.log('Response status:', response.status);
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        const data = await response.json();
-        console.log('Data fetched:', data);
-        this.info = data;
-        console.log('this.info:', this.info);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
     },
     scrollToContent() {
       document.querySelector('#inicio').scrollIntoView({ behavior: 'smooth' });
     },
     getTitulo(seccion) {
       const sectionData = this.info.find(item => item.seccion === seccion);
-      console.log(`getTitulo: sectionData for ${seccion}:`, sectionData);
       return sectionData ? sectionData.titulo : '';
     },
     getParrafos(seccion) {
       const sectionData = this.info.find(item => item.seccion === seccion);
-      console.log(`getParrafos: sectionData for ${seccion}:`, sectionData);
       return sectionData ? sectionData.parrafo : [];
     },
     getEventos() {
@@ -234,13 +217,17 @@ export default {
 .spinner-border {
   width: 3rem;
   height: 3rem;
-  border-width: 0.4em;
+  border-width: 0.3rem;
+}
+
+.spinner-border span {
+  display: none; /* Ocultar el texto "Loading..." */
 }
 
 .spinner-container p {
   margin-top: 1rem;
-  font-size: 1.25rem;
-  color: #333;
+  color: var(--colorPrincipal);
+  font-size: 1.5rem;
 }
 .banner {
   position: relative;
