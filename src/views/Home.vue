@@ -377,8 +377,6 @@ section#salon {
   margin: auto;
 }
 
-
-
 .contenedorCarrusel {
   width: 50%;
   text-align: center;
@@ -460,6 +458,10 @@ section#eventos h3 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.2px;
+}
+
+.tituloEventos {
+  margin-top: 3%;
 }
 
 .contenedorEventos {
