@@ -486,6 +486,12 @@ svg {
   display: none;
 }
 
+.rowdies-light {
+  font-family: "Rowdies", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
 /*TARJETA*/
 .tituloInicial {
   font-family: "Rowdies", sans-serif;
