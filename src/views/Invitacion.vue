@@ -71,7 +71,7 @@
               </g>
               <g id="Textos">
                 <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre"
-                  font-family="'Cooper Black', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
+                font-family="'Poppins', sans-serif" font-size="0.8px"">{{ nombre || 'Nicolas' }}</text>
 
                 <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle"
                   :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
@@ -329,6 +329,7 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Matemasie&family=Poppins:wght@300;400;500;600;700&family=Rowdies:wght@300;400;700&display=swap');
 
+
 .invitacion-container {
   text-align: center;
   margin: 20px;
@@ -486,23 +487,12 @@ svg {
   display: none;
 }
 
-.rowdies-light {
-  font-family: "Rowdies", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
 /*TARJETA*/
 .tituloInicial {
-  font-family: "Rowdies", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 300;
   font-size: 0.8px;
   font-style: normal;
-}
-
-.nombre {
-  font-family: 'Cooper Black', sans-serif;
-  font-size: 2px !important;
 }
 
 .edad {

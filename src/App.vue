@@ -14,6 +14,4 @@ import Footer from './components/Footer.vue';
 
 <style>
 /* En tu archivo CSS global o en App.vue */
-@import url('https://fonts.cdnfonts.com/css/cooper-black');
-
 </style>
