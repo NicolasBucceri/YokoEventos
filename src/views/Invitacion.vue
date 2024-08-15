@@ -1,6 +1,12 @@
 <template>
   <div class="invitacion-container">
     <h1 class="tituloPrincipal">Crea tu Tarjeta de Invitación</h1>
+    
+    <div class="alert alert-warning d-block d-md-none" role="alert">
+  <i class="fa-solid fa-triangle-exclamation"></i> Se recomienda descargar desde una computadora.
+</div>
+
+    
     <div class="row">
 
       <div class="columna-formulario">
@@ -71,8 +77,7 @@
               </g>
               <g id="Textos">
                 <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre"
-  font-family="'Poppins', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
-
+                  font-family="'Cooper Black', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
 
                 <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle"
                   :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
@@ -328,8 +333,7 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Matemasie&family=Poppins:wght@300;400;500;600;700&family=Rowdies:wght@300;400;700&display=swap');
-
+@import url('https://fonts.cdnfonts.com/css/cooper-black');
 
 .invitacion-container {
   text-align: center;
@@ -357,6 +361,10 @@ export default {
 .columna-tarjeta,
 .columna-acordeon {
   width: 30%;
+}
+
+.alert {
+  margin-bottom: 20px;
 }
 
 .columna-tarjeta {
@@ -490,10 +498,14 @@ svg {
 
 /*TARJETA*/
 .tituloInicial {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
+  font-family: 'Cooper Black', sans-serif !important;
   font-size: 0.8px;
   font-style: normal;
+}
+
+.nombre {
+  font-family: 'Cooper Black', sans-serif;
+  font-size: 2px !important;
 }
 
 .edad {

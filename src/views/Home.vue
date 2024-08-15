@@ -1,4 +1,10 @@
 <template>
+    <div v-if="loading" class="d-flex flex-column justify-content-center align-items-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Cargando base de datos...</p>
+    </div>
   <section id="banner">
     <div class="banner">
       <img src="../../public/img/yoko.webp" alt="">
@@ -145,6 +151,7 @@ export default {
   data() {
     return {
       info: [],
+      loading: true,  // Agregado para controlar la visibilidad del spinner
       apiUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
     };
   },
@@ -214,6 +221,26 @@ export default {
   --colorPrincipal: #363636;
   --colorSecundario: #FBFCFF;
   --colorTerciario: linear-gradient(180deg, #3793FF 0%, #0017E4 40%, #0017E4 100%);
+}
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Asegúrate de que cubre toda la pantalla */
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.4em;
+}
+
+.spinner-container p {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  color: #333;
 }
 .banner {
   position: relative;
