@@ -33,7 +33,8 @@
               <span class="lineaFormulario"></span>
             </div>
           </div>
-          <button @click="downloadColumnaTarjeta" class="crearFormulario">Crear Invitación</button>
+          <button v-if="isMobile" @click="captureInvitationMobile">Capturar Invitación</button>
+          <button v-else @click="captureInvitationPC">Capturar Invitación</button>
         </form>
       </div>
 
@@ -232,7 +233,8 @@ export default {
         hora: '#363636',
         tituloDeEspera: '#363636',
         ubicacion: '#363636',
-      }
+      },
+      isMobile: window.innerWidth <= 768, // Detect if the view is mobile
     };
   },
   methods: {
@@ -274,11 +276,28 @@ export default {
       }
       return `${formattedHours}:${minutes}`;
     },
-    downloadColumnaTarjeta() {
+    downloadColumnaTarjetaPC() {
       const element = this.$refs.columnaTarjeta;
-      html2canvas(element).then((canvas) => {
+      html2canvas(element, {
+        width: element.offsetWidth,
+        height: element.offsetHeight,
+        scale: 2, // Adjust the scale for PC
+      }).then((canvas) => {
         const link = document.createElement('a');
-        link.download = 'invitacion.png';
+        link.download = 'invitacion-pc.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    },
+    downloadColumnaTarjetaMobile() {
+      const element = this.$refs.columnaTarjeta;
+      html2canvas(element, {
+        width: element.offsetWidth,
+        height: element.offsetHeight,
+        scale: 1, // Adjust the scale for mobile
+      }).then((canvas) => {
+        const link = document.createElement('a');
+        link.download = 'invitacion-mobile.png';
         link.href = canvas.toDataURL();
         link.click();
       });
@@ -310,6 +329,13 @@ export default {
         console.error('No se encontró el elemento SVG.');
       }
     },
+    handleDownload() {
+      if (this.isMobile) {
+        this.downloadColumnaTarjetaMobile();
+      } else {
+        this.downloadColumnaTarjetaPC();
+      }
+    },
   },
   watch: {
     colores: {
@@ -322,18 +348,22 @@ export default {
   mounted() {
     this.cargarColoresDeLocalStorage();
     this.verificarTipografia();
-  }
+
+    // Recalculate isMobile on resize
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth <= 768;
+    });
+  },
 };
 </script>
+
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/cooper-black');
 
 @font-face {
   font-family: 'Cooper Black';
-  src: url('/COOPBL.TTF') format('truetype'); /* Usa 'truetype' para archivos .ttf */
-  font-weight: normal;
-  font-style: normal;
+  src: url('data:font/woff2;base64,aHR0cHM6Ly9mb250cy5jZG5mb250cy5jb20vY3NzL2Nvb3Blci1ibGFjayIgcmVsPSJzdHlsZXNoZWV0') format('woff2');
 }
 
 
