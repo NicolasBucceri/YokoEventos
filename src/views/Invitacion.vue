@@ -71,7 +71,8 @@
               </g>
               <g id="Textos">
                 <text class="cls-5 nombre" x="-1%" y="-5%" transform="translate(0.26 2.98)" :fill="colores.nombre"
-                font-family="'Poppins', sans-serif" font-size="0.8px"">{{ nombre || 'Nicolas' }}</text>
+  font-family="'Poppins', sans-serif" font-size="0.8px">{{ nombre || 'Nicolas' }}</text>
+
 
                 <text class="cls-6 tituloInicial" x="45%" y="18%" text-anchor="middle"
                   :fill="colores.tituloDeInvitacion">Te Invita A Su Cumpleaños!!</text>
