@@ -33,8 +33,7 @@
               <span class="lineaFormulario"></span>
             </div>
           </div>
-          <button v-if="isMobile" @click="captureInvitationMobile">Capturar Invitación</button>
-          <button v-else @click="captureInvitationPC">Capturar Invitación</button>
+          <button @click="captureInvitation" class="crearFormulario">Crear Invitación</button>
         </form>
       </div>
 
@@ -206,7 +205,6 @@ export default {
       fecha: '',
       hora: '',
       horaFin: '',
-      isMobile: window.innerWidth <= 768,
       colores: {
         /*Fondo*/
         encabezado: '#363636',
@@ -235,7 +233,7 @@ export default {
         tituloDeEspera: '#363636',
         ubicacion: '#363636',
       },
-      isMobile: window.innerWidth <= 768, // Detect if the view is mobile
+      fontName: 'Cooper Black', // Asegúrate de que este sea el nombre correcto de la fuente
     };
   },
   methods: {
@@ -277,38 +275,15 @@ export default {
       }
       return `${formattedHours}:${minutes}`;
     },
-    checkIsMobile() {
-    this.isMobile = window.innerWidth <= 768;
-  },
-  loadFontAndCapture(element, callback) {
-    const font = new FontFace('Cooper Black', 'url(https://fonts.gstatic.com/s/cooperblack/v1/dg4cPr0cJd2SAVbKFXqOe6q5-gjG6S_P.ttf)');
-    font.load().then(() => {
-      document.fonts.add(font);
-      callback(element);
-    });
-  },
-    captureInvitationPC() {
-    const element = this.$refs.columnaTarjeta;
-    html2canvas(element, { scale: 2 }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'invitacion.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
-  },
-
-  captureInvitationMobile() {
-    const element = this.$refs.columnaTarjeta;
-    html2canvas(element, { scale: 2 }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'invitacion.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
-  },
-  beforeDestroy() {
-  window.removeEventListener('resize', this.checkIsMobile);
-},
+    downloadColumnaTarjeta() {
+      const element = this.$refs.columnaTarjeta;
+      html2canvas(element).then((canvas) => {
+        const link = document.createElement('a');
+        link.download = 'invitacion.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    },
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
@@ -336,13 +311,9 @@ export default {
         console.error('No se encontró el elemento SVG.');
       }
     },
-    handleDownload() {
-      if (this.isMobile) {
-        this.downloadColumnaTarjetaMobile();
-      } else {
-        this.downloadColumnaTarjetaPC();
-      }
-    },
+    captureInvitation() {
+    this.downloadColumnaTarjeta();
+  }
   },
   watch: {
     colores: {
@@ -355,15 +326,10 @@ export default {
   mounted() {
     this.cargarColoresDeLocalStorage();
     this.verificarTipografia();
-    window.addEventListener('resize', this.checkIsMobile);
-
-    // Recalculate isMobile on resize
-    window.addEventListener('resize', () => {
-      this.isMobile = window.innerWidth <= 768;
-    });
-  },
+  }
 };
 </script>
+
 
 
 <style scoped>
