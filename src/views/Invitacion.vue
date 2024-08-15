@@ -276,14 +276,27 @@ export default {
       return `${formattedHours}:${minutes}`;
     },
     downloadColumnaTarjeta() {
-      const element = this.$refs.columnaTarjeta;
+    const element = this.$refs.columnaTarjeta;
+
+    // Check if the viewport is mobile or PC
+    if (window.innerWidth <= 768) { // Mobile view
+      // Capture and download for mobile
       html2canvas(element).then((canvas) => {
         const link = document.createElement('a');
-        link.download = 'invitacion.png';
+        link.download = 'invitacion_mobile.png'; // Specific file name for mobile
         link.href = canvas.toDataURL();
         link.click();
       });
-    },
+    } else { // PC view
+      // Capture and download for PC
+      html2canvas(element).then((canvas) => {
+        const link = document.createElement('a');
+        link.download = 'invitacion_pc.png'; // Specific file name for PC
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  },
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
