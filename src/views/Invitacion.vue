@@ -33,7 +33,7 @@
               <span class="lineaFormulario"></span>
             </div>
           </div>
-          <button @click="captureInvitation" class="crearFormulario">Crear Invitación</button>
+          <button @click="downloadColumnaTarjeta" class="crearFormulario">Crear Invitación</button>
         </form>
       </div>
 
@@ -232,8 +232,7 @@ export default {
         hora: '#363636',
         tituloDeEspera: '#363636',
         ubicacion: '#363636',
-      },
-      fontName: 'Cooper Black', // Asegúrate de que este sea el nombre correcto de la fuente
+      }
     };
   },
   methods: {
@@ -276,27 +275,14 @@ export default {
       return `${formattedHours}:${minutes}`;
     },
     downloadColumnaTarjeta() {
-    const element = this.$refs.columnaTarjeta;
-
-    // Check if the viewport is mobile or PC
-    if (window.innerWidth <= 768) { // Mobile view
-      // Capture and download for mobile
+      const element = this.$refs.columnaTarjeta;
       html2canvas(element).then((canvas) => {
         const link = document.createElement('a');
-        link.download = 'invitacion_mobile.png'; // Specific file name for mobile
+        link.download = 'invitacion.png';
         link.href = canvas.toDataURL();
         link.click();
       });
-    } else { // PC view
-      // Capture and download for PC
-      html2canvas(element).then((canvas) => {
-        const link = document.createElement('a');
-        link.download = 'invitacion_pc.png'; // Specific file name for PC
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    }
-  },
+    },
     formatFecha(fecha) {
       if (!fecha) return '18/12/2024'; // Valor por defecto
       const [year, month, day] = fecha.split('-');
@@ -324,9 +310,6 @@ export default {
         console.error('No se encontró el elemento SVG.');
       }
     },
-    captureInvitation() {
-    this.downloadColumnaTarjeta();
-  }
   },
   watch: {
     colores: {
@@ -343,11 +326,8 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
-@import url('https://fonts.cdnfonts.com/css/cooper-black');
-
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Matemasie&family=Poppins:wght@300;400;500;600;700&family=Rowdies:wght@300;400;700&display=swap');
 
 .invitacion-container {
   text-align: center;
@@ -508,7 +488,8 @@ svg {
 
 /*TARJETA*/
 .tituloInicial {
-  font-family: 'Cooper Black', sans-serif !important;
+  font-family: "Rowdies", sans-serif;
+  font-weight: 300;
   font-size: 0.8px;
   font-style: normal;
 }
